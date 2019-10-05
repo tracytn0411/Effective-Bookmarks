@@ -1,0 +1,43 @@
+
+
+{
+  "name": "effective bookmark",
+  "version": "1.0",
+  "description": "effective bookmark",
+  "permissions": ["storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "manifest_version": 2
+}
+
+
+// {
+//   "name": "Effective bookmark",
+//   "version": "1.0",
+//   "description": "effective bookmark",
+//   "permissions": ["declarativeContent","storage"],
+//   "background": {
+//     "scripts": ["background.js"],
+//     "persistent": false
+//   },
+//   "page_action": {
+//     "default_popup": "popup.html",
+//     "default_icon": {
+//       "16": "public/extension/images/bookmarkicon128 .png",
+//       "32": "public/extension/images/bookmarkicon128 .png",
+//       "48": "public/extension/images/bookmarkicon128 .png",
+//       "128": "public/extension/images/bookmarkicon128 .png"
+//     }
+//   },
+
+//   "icons": {
+//     "16": "public/extension/images/bookmarkicon128 .png",
+//     "32": "public/extension/images/bookmarkicon128 .png",
+//     "48": "public/extension/images/bookmarkicon128 .png",
+//     "128": "public/extension/images/bookmarkicon128 .png"
+//   },
+
+//   "manifest_version": 2
+// }
