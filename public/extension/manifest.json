@@ -1,16 +1,20 @@
-
 {
   "name": "Effective Bookmarks",
   "version": "1.0",
   "description": "effective bookmark",
-  "permissions": ["storage", "declarativeContent"],
+  "permissions": [
+    "storage", 
+    "declarativeContent",
+    "tabs",
+    "<all_urls>"
+  ],
   "background": {
     "scripts": ["background.js"],
     "persistent": false
   },
   "manifest_version": 2,
 
-  "page_action" : {
+  "browser_action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "images/bookmarkicon16.png",
@@ -24,5 +28,5 @@
     "32": "images/bookmarkicon32.png",
     "48": "images/bookmarkicon48.png",
     "128": "images/bookmarkicon128.png"
-    }
   }
+}
