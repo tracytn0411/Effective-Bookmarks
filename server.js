@@ -14,16 +14,16 @@ app.use(bodyParser.json());
 //app.use(cors);
 
 //Connect to MySQL via JawsDB
-// var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
-// connection.connect();
+var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
+connection.connect();
 
 //Use for offline testing
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'newuser1',
-  password : 'Boom',
-  database : 'effective_bookmarks'
-});
+// var connection = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'newuser1',
+//   password : 'Boom',
+//   database : 'effective_bookmarks'
+// });
 
 connection.connect();
 
