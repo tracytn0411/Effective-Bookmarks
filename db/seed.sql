@@ -1,0 +1,1 @@
+INSERT INTO categories (catName) VALUES ('books'), ('food');

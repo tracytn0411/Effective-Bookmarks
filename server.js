@@ -14,16 +14,16 @@ app.use(bodyParser.json());
 //app.use(cors);
 
 //Connect to MySQL via JawsDB
-var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
-connection.connect();
+// var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
+// connection.connect();
 
 //Use for offline testing
-// var connection = mysql.createConnection({
-//   host     : 'localhost',
-//   user     : 'newuser1',
-//   password : 'Boom',
-//   database : 'effective_bookmarks'
-// });
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'password',
+  database : 'bookmarks_db'
+});
 
 connection.connect();
 
@@ -66,6 +66,22 @@ app.post('/insertSubcat', function(req, res) {
     });
 })
 
+app.post('/extension', function(req, res){
+  console.log(req.body)
+
+  //res.json({sucess: true})
+
+  connection.query ('INSERT INTO recentlyAdded (url) VALUES (?)', [req.body.url], function(error, results, fields){
+    if (error) res.send(error)
+    else {
+        connection.query('SELECT * FROM recentlyAdded', function (error, results, fields){
+          if (error) return res.send(error)
+
+          res.json({sucess: true});
+        })
+      }
+  });
+})
 
 app.listen(PORT, () => console.log(`listening on ${ PORT }`))
 
