@@ -14,18 +14,17 @@ app.use(bodyParser.json());
 //app.use(cors);
 
 //Connect to MySQL via JawsDB
-// var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
-// connection.connect();
+var connection = mysql.createConnection(process.env.JAWSDB_NAVY_URL);
+connection.connect();
 
 //Use for offline testing
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'password',
-  database : 'bookmarks_db'
-});
-
-connection.connect();
+// var connection = mysql.createConnection({
+//   host     : 'localhost',
+//   user     : 'root',
+//   password : 'password',
+//   database : 'bookmarks_db'
+// });
+// connection.connect();
 
 //Routes 
 app.get('/', (req, res) => {
@@ -81,6 +80,13 @@ app.post('/extension', function(req, res){
         })
       }
   });
+})
+
+app.get('/extension',function(req, res) {
+  connection.query ('SELECT url FROM recentlyAdded', function (error, results, fields){
+    if (error) res.send(error)
+    else res.send(results)
+  })
 })
 
 app.listen(PORT, () => console.log(`listening on ${ PORT }`))

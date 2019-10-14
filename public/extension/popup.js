@@ -18,6 +18,8 @@
 //     });
 // });
 
+$('#testBtn').on('click', function(){
+
 chrome.tabs.query({
     active: true,
     lastFocusedWindow: true
@@ -25,14 +27,14 @@ chrome.tabs.query({
     // and use that tab to fill in out title and url
     var tab = tabs[0];
     console.log(tab.url);
-    alert(tab.url);
+    //alert(tab.url);
     var tabTest = tab.url
     // var pTab = $('<p>').text(tabTest)
-    $('#recentlyAdded').append(tabTest)
+    $('#test').append(tabTest)
 
-    var div=document.createElement("div"); 
-    document.body.appendChild(div); 
-    div.innerText=tabTest.toString();
+    // var div=document.createElement("div"); 
+    // document.body.appendChild(div); 
+    // div.innerText=tabTest.toString();
 
     fetch('http://localhost:5000/extension', {
         method: 'POST',
@@ -44,3 +46,4 @@ chrome.tabs.query({
     })
 });
 
+})

@@ -3,6 +3,10 @@ $(document).ready(function () {
     theme: "minimal"
   });
 
+  // $("#footerbar").mCustomScrollbar({
+  //   axis: 'x'
+  // });
+
   $('#sidebarCollapse').on('click', function () {
     // open or close navbar
     $('#sidebar, #content').toggleClass('active');
@@ -12,11 +16,19 @@ $(document).ready(function () {
     // in our CSS
     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
   });
+
+  // $('#footbarCollapse').on('click', function () {
+  //   $('#footbar, #contentBody').toggleClass('active');
+  // });
+  $('.recentBtn').on('click', function(){
+    $('.newUrls').toggleClass('d-none')
+  })
+
 });
 
-displayCategories()
-displaySubcat()
-
+displayCategories();
+displaySubcat();
+displayRecent();
 
 function displayCategories() {
   $('.categories').empty();
@@ -24,29 +36,6 @@ function displayCategories() {
     url: '/displaycat',
     method: 'GET'
    })
-  //  .then(function(res){
-  //    for (var i=0; i<res.length;i++){
-  //     var li = $('<li>');
-  //     li.text(res[i]['category_name']);
-
-  //     var f = $('<form>')
-  //     f.attr('class', 'deleteForm')
-  //     f.attr('action', '/delete?_method=DELETE');
-  //     f.attr('method', 'POST');
-  //       var inp = $('<input>');
-  //         inp.attr('type', 'hidden');
-  //         inp.attr('name', 'id');
-  //         inp.attr('value', res[i].id)
-  //       var b = $('<button>').text('delete');
-
-  //     f.append(inp, b);
-
-  //     li.append(f)
-  //     $('.categories').append(li);
-  //    }
-  //  })
-   
-  
   .then(function(categories){
     for (let catIndex in categories) {
       console.log(catIndex);
@@ -84,14 +73,10 @@ function displayCategories() {
 
       var subcatLi = $('<li>').append(subcatForm);
       
-    
-      
       $('.categories').append(catLi)
       catLi.append(catName)
       catLi.append(subcatUl)
       subcatUl.append(subcatLi)
-
-
 
     }
   })
@@ -128,9 +113,8 @@ function displaySubcat(){
       $('#' + subcategories[subcatIndex].cat_id).append(subcatLi)
     }
   })
-
-
 }
+
 $(document).on('click', '.addSubCat', function(){
   event.preventDefault()
 
@@ -166,3 +150,18 @@ $(document).on('click', '.addSubCat', function(){
 
 })
 
+function displayRecent (){
+  $('#recentAdded').empty();
+  $.ajax({
+    url: '/extension',
+    method: 'GET',
+  })
+  .then(function(urls){
+    for (let urlIndex in urls) {
+      console.log(urls)
+      var urlLink = $('<p>').text(urls[urlIndex].url)
+      var urlLi = $('<li>').append(urlLink)
+      $('#recentAdded').append(urlLi)
+    }
+  })
+}
