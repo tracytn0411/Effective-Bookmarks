@@ -20,12 +20,11 @@ connection.connect();
 //Use for offline testing
 // var connection = mysql.createConnection({
 //   host     : 'localhost',
-//   user     : 'newuser1',
-//   password : 'Boom',
-//   database : 'effective_bookmarks'
+//   user     : 'root',
+//   password : 'password',
+//   database : 'bookmarks_db'
 // });
-
-connection.connect();
+// connection.connect();
 
 //Routes 
 app.get('/', (req, res) => {
@@ -66,6 +65,29 @@ app.post('/insertSubcat', function(req, res) {
     });
 })
 
+app.post('/extension', function(req, res){
+  console.log(req.body)
+
+  //res.json({sucess: true})
+
+  connection.query ('INSERT INTO recentlyAdded (url) VALUES (?)', [req.body.url], function(error, results, fields){
+    if (error) res.send(error)
+    else {
+        connection.query('SELECT * FROM recentlyAdded', function (error, results, fields){
+          if (error) return res.send(error)
+
+          res.json({sucess: true});
+        })
+      }
+  });
+})
+
+app.get('/extension',function(req, res) {
+  connection.query ('SELECT url FROM recentlyAdded', function (error, results, fields){
+    if (error) res.send(error)
+    else res.send(results)
+  })
+})
 
 app.listen(PORT, () => console.log(`listening on ${ PORT }`))
 
