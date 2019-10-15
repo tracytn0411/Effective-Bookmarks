@@ -30,17 +30,6 @@
       <h2>Effective Bookmarks</h2>
     </header>
 
-    <form action="/insertcat" method="POST">
-      <section class="input-group">
-        <input id='inputCat' type="text" class="form-control" placeholder="New category..." aria-label="New Category"
-          aria-describedby="button-addon2">
-        <div class="input-group-append" id="addCat">
-          <button class="btn btn-infot" type="button" id="button-addon2">
-            <i class="fa fa-plus"></i>
-          </button>
-        </div>
-      </section>
-    </form>
 
     <ul class="categories list-unstyled py-4">
       <li class="active">
@@ -76,28 +65,63 @@
   <!-- Page Content  -->
   <main id="content" class="d-flex flex-column">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <button type="button" id="sidebarCollapse" class="btn btn-info">
-          <span><i class="fa fa-align-left"></i></span>
-        </button>
-        <!--Collapse button for small viewport-->
-        <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-          data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-          aria-label="Toggle navigation">
-          <i class="fa fa-align-justify"></i>
-        </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="nav navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Page</a>
-            </li>
-          </ul>
-        </div>
+      <!--Collapse button to minimize sidebar-->
+      <button type="button" id="sidebarCollapse" class="btn btn-info">
+        <span><i class="fa fa-align-left"></i></span>
+      </button>
+
+      <!--Collapse button for small viewport-->
+      <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <i class="fa fa-align-justify"></i>
+      </button>
+
+      <!-- <form action="/insertcat" method="POST">
+        <section class="input-group">
+          <input id='inputCat' type="text" class="form-control" placeholder="New category..." aria-label="New Category"
+            aria-describedby="button-addon2">
+          <div class="input-group-append" id="addCat">
+            <button class="btn btn-info" type="button" id="button-addon2">
+              <i class="fa fa-plus"></i>
+            </button>
+          </div>
+        </section>
+      </form> -->
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="nav nav-pills">
+
+          <!--Button Add on Navbar-->
+          <li class="nav-item">
+            <div class="btn-group dropdown" id="addDropdown">
+              <a class="nav-link dropdown-toggle-split" data-toggle="dropdown" href="#" role="button"
+                aria-haspopup="true" aria-expanded="false">Add</a>
+              <div class="dropdown-menu" id='addOptions'>
+                <button class="dropdown-item modalCat" onclick="addMenu(this.value)" value='inputCat' type="button">New
+                  category</button>
+                <button class="dropdown-item modalSubcat" onclick="addMenu(this.value)" value='inputSubcat'
+                  type="button">New subcategory</button>
+                <button class="dropdown-item modalEB" onclick="addMenu(this.value)" value='inputEB' type="button">New
+                  bookmark</button>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+              </div>
+              <div id="addModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+            </div>
+          </li>
+
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Page</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">Page</a>
+          </li>
+        </ul>
       </div>
+
     </nav>
 
     <section id="contentBody">
@@ -121,10 +145,13 @@
         laborum.</p>
     </section>
 
+    <!--RecentlyAdded footbar-->
     <section id="footbar" class="container-fluid mt-auto">
       <div class="row footBtn">
         <div class="col">
-          <button class="btn btn-info recentBtn">Up/Down</button>
+          <button class="btn recentBtn">
+            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <div class="row newUrls">
@@ -135,8 +162,6 @@
     </section>
 
   </main>
-
-
 
   <!-- jQuery CDN -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
@@ -154,10 +179,8 @@
     src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js">
   </script>
 
-
-  <script type="text/javascript" src="assets/javascript/app.js">
-
-  </script>
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
+  <script type="text/javascript" src="assets/javascript/menu.js"></script>
 </body>
 
 </html>
