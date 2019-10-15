@@ -45,6 +45,13 @@ app.get('/displaySubcat', function(req, res) {
   })
 })
 
+app.post('/displayURL', function(req, res) {
+  connection.query('SELECT * FROM bookmarks where subcat_id = ?',[req.body.subcat_id], function (error, results, fields) {
+    if (error) res.send(error)
+    else res.send(results)
+  })
+})
+
 // app.get('/addMenu', function(req, res) {
 //   connection.query('SELECT t1.cat_id AS cat_id, t1.id AS subcat_id, t1.subcat_name AS subcat_name, categories.category_name AS cat_name FROM (SELECT cat_id, id, subcat_name FROM subcategories) AS t1 LEFT JOIN categories ON t1.cat_id = categories.id', function (error, results, fields) {
 //     if (error) res.send(error)

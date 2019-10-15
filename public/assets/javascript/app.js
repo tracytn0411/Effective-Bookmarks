@@ -14,71 +14,93 @@ $(document).ready(function () {
   });
 
   //toggle recentlyAdded footbar
-  $('.recentBtn').on('click', function(){
+  $('.recentBtn').on('click', function () {
     $('.newUrls').toggleClass('d-none');
     $(this).find("i").toggleClass("fa-angle-double-down fa-angle-double-up");
   })
-
 });
 
-//displayCategories();
+displayCategories();
 displaySubcat();
 displayRecent();
 
-// function displayCategories() {
-//   $('.categories').empty();
-//   $.ajax({
-//     url: '/displaycat',
-//     method: 'GET'
-//    })
-//   .then(function(categories){
-//     for (let catIndex in categories) {
-//       console.log(catIndex);
+function displayCategories() {
+  $('.categories').empty();
+  $.ajax({
+      url: '/displaycat',
+      method: 'GET'
+    })
+    .then(function (categories) {
+      for (let catIndex in categories) {
+        //console.log(catIndex);
 
-//       var catName = $('<a>').text(categories[catIndex].category_name).attr({'href':'#'+categories[catIndex].id, 'data-toggle':'collapse', 'aria-expanded':'false', 'class':'dropdown-toggle'});
-//       var catLi = $('<li>')
-            
-//       var subcatUl = $('<ul>').addClass('collapse list-unstyled subcat').attr('id',categories[catIndex].id);
+        var catName = $('<a>').text(categories[catIndex].category_name).attr({
+          'href': '#' + categories[catIndex].id,
+          'data-toggle': 'collapse',
+          'aria-expanded': 'false',
+          'class': 'dropdown-toggle'
+        });
+        var catLi = $('<li>')
+        var subcatUl = $('<ul>').addClass('collapse list-unstyled subcat').attr('id', categories[catIndex].id);
 
-//       //var subcatName = $('<a>').text('all URLs').attr('href','#');
-//       var subcatForm = $('<form>').attr({'id':'inputSubcat', 'action':'/insertSubcat', 'method':'POST'})
-//       var subcatSection = $('<section>').addClass('input-group')
-//       var subcatInput = $('<input>').addClass('form-control').attr({
-//         'type':'text', 
-//         'placeholder':'new subcategory...', 
-//         'aria-label': 'New Subcat',
-//         'aria-describedby': 'button-addon2',
-//         'name': 'subcat_name'
-//       });
 
-//       //Button to add subcat
-//       var subcatDiv = $('<div>').addClass('input-group-append')
-//       var subCatBtn = $('<button>').addClass('btn btn-info addSubCatold').attr({
-//         'type':'button',
-//         'id': 'button-addon2',
-//         'cat_id': categories[catIndex].id, //Need cat_id for db table subcategories
-//         'cat_name': categories[catIndex].category_name
-        
-//       }).append('<i class = "fa fa-plus"></i>');
+        $('.categories').append(catLi)
+        catLi.append(catName)
+        catLi.append(subcatUl)
 
-//       subcatForm.append(subcatSection);
-//       subcatSection.append(subcatInput);
-//       subcatSection.append(subcatDiv)
-//       subcatDiv.append(subCatBtn);
+      }
+    })
+}
 
-//       var subcatLi = $('<li>').append(subcatForm);
-      
-//       $('.categories').append(catLi)
-//       catLi.append(catName)
-//       catLi.append(subcatUl)
-//       subcatUl.append(subcatLi)
+function displaySubcat() {
+  $('.subcat').empty()
+  $.ajax({
+    url: '/displaySubcat',
+    method: 'GET'
+  })
+  .then(function (subcategories) {
+    for (let subcatIndex in subcategories) {
+      var subcatName = $('<a>').addClass('btn subcatBtn').text(subcategories[subcatIndex].subcat_name).attr({
+        'href': '#',
+        'role': 'button',
+        'data': subcategories[subcatIndex].id
+      });
 
-//     }
-//   })
-// }
+      var subcatLi = $('<li>').append(subcatName);
+      $('#' + subcategories[subcatIndex].cat_id).append(subcatLi);
+
+      var bookmarkList = $('<div>').addClass('bookmarks').attr('id', 'urlSubID' + subcategories[subcatIndex].id);
+      $('.mainContent').append(bookmarkList);
+    }
+  })
+}
+
+$(document).on('click', '.subcatBtn', function () {
+  $('.bookmarks').empty();
+  var subcatBtn_id = $(this).attr('data');
+  console.log(subcatBtn_id)
+
+  $.ajax({
+      url: '/displayURL',
+      method: 'POST',
+      data: {
+        subcat_id: subcatBtn_id
+      }
+    })
+    .then(function (urls) {
+      for (let urlIndex in urls) {
+        var urlLink = $('<a>').text(urls[urlIndex].bookmark_url).attr({
+          'href': urls[urlIndex].bookmark_url,
+          'target': '_blank'
+        })
+
+        $('#' + 'urlSubID' + urls[urlIndex].subcat_id).append(urlLink)
+      }
+    })
+})
 
 //table *categories*
-$(document).on('click', '#addCat', function() {
+$(document).on('click', '#addCat', function () {
   event.preventDefault();
   var newCat = $('#inputCat').val();
   console.log(newCat);
@@ -89,51 +111,36 @@ $(document).on('click', '#addCat', function() {
     data: {
       category_name: newCat
     }
-  }).then(function(res){
+  })
+  .then(function (res) {
     displayCategories()
   })
 })
 
-function displaySubcat(){
-  //$('.subcat').empty()
-  $.ajax({
-    url: '/displaySubcat',
-    method: 'GET'
-  }).
-  then(function(subcategories) {
-    for (let subcatIndex in subcategories) {
-      var subcatName = $('<a>').text(subcategories[subcatIndex].subcat_name).attr('href','#');
-      var subcatLi = $('<li>').append(subcatName);
-
-      $('#' + subcategories[subcatIndex].cat_id).append(subcatLi)
-    }
-  })
-}
-
 //table *subcategories*
-$(document).on('click', '#addSubCat', function(){
+$(document).on('click', '#addSubCat', function () {
   event.preventDefault()
 
-  var newSubcat = $('#inputSubcat').val(); 
+  var newSubcat = $('#inputSubcat').val();
   var parentCatID = $('#selectCat').val(); //Cat ID of the new subcat
   console.log(newSubcat)
   console.log(parentCatID);
 
   $.ajax({
-    url: '/insertSubcat',
-    method: 'POST',
-    data: {
-      cat_id : parentCatID,
-      subcat_name: newSubcat
-    }
-  })
-  .then(function(res){
-    displaySubcat()
-  })
+      url: '/insertSubcat',
+      method: 'POST',
+      data: {
+        cat_id: parentCatID,
+        subcat_name: newSubcat
+      }
+    })
+    .then(function (res) {
+      displaySubcat()
+    })
 })
 
 //table *bookmarks*
-$(document).on('click', '#addUrl', function(){
+$(document).on('click', '#addUrl', function () {
   event.preventDefault()
 
   var newUrl = $('#inputBookmark').val();
@@ -142,32 +149,32 @@ $(document).on('click', '#addUrl', function(){
   console.log(parentSubcat)
 
   $.ajax({
-    url: '/insertURL',
-    method: 'POST',
-    data: {
-      cat_id : parentCat,
-      subcat_id : parentSubcat,
-      bookmark_url : newUrl
-    }
-  })
-  .then(function(res){
-    console.log('yayyyy');
-  })
+      url: '/insertURL',
+      method: 'POST',
+      data: {
+        cat_id: parentCat,
+        subcat_id: parentSubcat,
+        bookmark_url: newUrl
+      }
+    })
+    .then(function (res) {
+      console.log('yayyyy');
+    })
 })
 
 //table *recentlyAdded*
-function displayRecent (){
+function displayRecent() {
   $('#recentAdded').empty();
   $.ajax({
-    url: '/extension',
-    method: 'GET',
-  })
-  .then(function(urls){
-    for (let urlIndex in urls) {
-      console.log(urls)
-      var urlLink = $('<p>').text(urls[urlIndex].url)
-      var urlLi = $('<li>').append(urlLink)
-      $('#recentAdded').append(urlLi)
-    }
-  })
+      url: '/extension',
+      method: 'GET',
+    })
+    .then(function (urls) {
+      for (let urlIndex in urls) {
+        console.log(urls)
+        var urlLink = $('<p>').text(urls[urlIndex].url)
+        var urlLi = $('<li>').append(urlLink)
+        $('#recentAdded').append(urlLi)
+      }
+    })
 }
