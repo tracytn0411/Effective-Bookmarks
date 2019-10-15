@@ -21,7 +21,7 @@ connection.connect();
 // var connection = mysql.createConnection({
 //   host     : 'localhost',
 //   user     : 'root',
-//   password : 'password',
+//   password : '',
 //   database : 'bookmarks_db'
 // });
 // connection.connect();
@@ -39,11 +39,28 @@ app.get('/displaycat', function(req,res) {
 })
 
 app.get('/displaySubcat', function(req, res) {
-  connection.query('SELECT * FROM subcategories', function (error, results, fileds) {
+  connection.query('SELECT * FROM subcategories', function (error, results, fields) {
     if (error) res.send(error)
     else res.send(results)
   })
 })
+
+// app.get('/addMenu', function(req, res) {
+//   connection.query('SELECT t1.cat_id AS cat_id, t1.id AS subcat_id, t1.subcat_name AS subcat_name, categories.category_name AS cat_name FROM (SELECT cat_id, id, subcat_name FROM subcategories) AS t1 LEFT JOIN categories ON t1.cat_id = categories.id', function (error, results, fields) {
+//     if (error) res.send(error)
+//     else res.send(results)
+//   })
+// })
+
+// app.post('/addMenu', function(req, res) {
+//   connection.query('SELECT * FROM subcategories WHERE cat_id = ?',[req.body.parent_catID], function (error, results, fields) {
+//     if (error) res.send(error)
+//     else {
+//       console.log(req.body.parent_catID)
+//       res.send(results)
+//     }
+//   })
+// })
 
 app.post('/insertcat', function(req, res) {
     connection.query ('INSERT INTO categories (category_name) VALUES (?)', [req.body.category_name], function(error, results, fields){
@@ -57,12 +74,16 @@ app.post('/insertSubcat', function(req, res) {
     connection.query ('INSERT INTO subcategories (cat_id, subcat_name) VALUES (?,?)', [req.body.cat_id, req.body.subcat_name], function(error, results, fields){
       if (error) res.send(error)
       else {
-          connection.query('SELECT * FROM subcategories', function (error, results, fields){
-            if (error) res.send(error)
-            else res.send(results);
-          })
+          res.redirect('/')
         }
     });
+})
+
+app.post('/insertURL', function(req, res) {
+  connection.query ('INSERT INTO bookmarks (cat_id, subcat_id, bookmark_url) VALUES (?,?,?)', [req.body.cat_id, req.body.subcat_id, req.body.bookmark_url], function(error, results, fields){
+    if (error) res.send(error)
+    else res.redirect('/')
+  })
 })
 
 app.post('/extension', function(req, res){
