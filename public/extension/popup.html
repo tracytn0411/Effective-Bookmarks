@@ -8,22 +8,33 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>GTmetrix Analyzer</title>
         <title>Popup Bookmark</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="./popup.css">
+        <!-- Scrollbar Custom CSS -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+        <!-- Font Awesome JS -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     </head>
 
     <body>
-        <h1>Bookmark</h1>
-
-        <div id="test">
-        <button id="testBtn">Add</button>
+        <div class="popup">
+            <h2>Effective Bookmark</h2>
+                <button id="testBtn" type="button" class="btn btn-info btn-block">Add</button>
+            <!-- <form action="input">
+                <input type="text" name="newCategories" placeholder="Add your category">
+                <button id="addCategories" type="button" class="btn btn-primary">+</button>
+                <ul id="ul"></ul>
+            </form> -->
+            <div id="test"></div>
         </div>
-
-        <form action="input">
-            <input type="text" name="newCategories" placeholder="Add your category">
-            <button id="addCategories">+</button>
-            <ul id="ul"></ul>
-        </form>
         <script src="./jquery-3.4.1.min.js"></script>
         <script src="./popup.js"></script>
 
-        
+
     </body>
