@@ -7,10 +7,12 @@ var path = require('path');
 var PORT = process.env.PORT || 5000
 var mysql = require('mysql'); 
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
 //app.use(cors);
 
 //Connect to MySQL via JawsDB
@@ -21,7 +23,7 @@ connection.connect();
 // var connection = mysql.createConnection({
 //   host     : 'localhost',
 //   user     : 'root',
-//   password : '',
+//   password : '',pu
 //   database : 'bookmarks_db'
 // });
 // connection.connect();
@@ -88,6 +90,19 @@ app.post('/insertSubcat', function(req, res) {
 
 app.post('/insertURL', function(req, res) {
   connection.query ('INSERT INTO bookmarks (cat_id, subcat_id, bookmark_url) VALUES (?,?,?)', [req.body.cat_id, req.body.subcat_id, req.body.bookmark_url], function(error, results, fields){
+    if (error) res.send(error)
+    else res.redirect('/')
+  })
+})
+
+app.delete('/removeUrl', function(req, res) {
+  connection.query ('DELETE FROM bookmarks WHERE id = ?', [req.body.id], function(error, results, fields){
+    if (error) res.send(error)
+    else res.redirect('/')
+  })
+})
+app.delete('/removeRecent', function(req, res) {
+  connection.query ('DELETE FROM recentlyAdded WHERE id = ?', [req.body.id], function(error, results, fields){
     if (error) res.send(error)
     else res.redirect('/')
   })
