@@ -4,13 +4,14 @@ $(document).ready(function () {
   });
 
   $('#sidebarCollapse').on('click', function () {
-    // open or close navbar
     $('#sidebar, #content').toggleClass('active');
     // close dropdowns
     $('.collapse.in').toggleClass('in');
     // and also adjust aria-expanded attributes we use for the open/closed arrows
     // in our CSS
     $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+   
+    $(this).find("i").toggleClass("fa-angle-double-left fa-angle-double-right");
   });
 
   //toggle recentlyAdded footbar
@@ -61,7 +62,6 @@ function displaySubcat() {
   .then(function (subcategories) {
     for (let subcatIndex in subcategories) {
       var subcatName = $('<a>').addClass('btn subcatBtn').text(subcategories[subcatIndex].subcat_name).attr({
-        'href': '#',
         'role': 'button',
         'data': subcategories[subcatIndex].id
       });
@@ -89,14 +89,40 @@ $(document).on('click', '.subcatBtn', function () {
     })
     .then(function (urls) {
       for (let urlIndex in urls) {
-        var urlLink = $('<a>').text(urls[urlIndex].bookmark_url).attr({
+        
+        var deleteForm = $('<form>').addClass('urlDelete').attr({
+          'action': '/removeUrl?_method=DELETE',
+          'method': 'POST',
+          'data': urls[urlIndex].id
+        }).append($('<button>').addClass('btn urlDelBtn').append('<i class="fa fa-times"></i>'))
+
+        var urlLink = $('<a>').addClass('list-group-item list-group-item-action d-flex justify-content-between align-items-center  bookmarkURL').text(urls[urlIndex].bookmark_url).attr({
           'href': urls[urlIndex].bookmark_url,
           'target': '_blank'
-        })
+        }).append(deleteForm)
+
 
         $('#' + 'urlSubID' + urls[urlIndex].subcat_id).append(urlLink)
       }
     })
+})
+
+//delete urls
+$(document).on('click', '.urlDelete', function(){
+  event.preventDefault();
+  var urlId = $(this).attr('data')
+  console.log(urlId)
+  $(this).parent().parent().remove();//remove from DOM
+
+  $.ajax({
+    url: '/removeUrl?_method=DELETE',
+    method: 'POST',
+    data: {
+      id : urlId
+    }
+  }).then(function(res){
+    console.log('url deleted!')
+  });
 })
 
 //table *categories*
@@ -171,10 +197,38 @@ function displayRecent() {
     })
     .then(function (urls) {
       for (let urlIndex in urls) {
-        console.log(urls)
-        var urlLink = $('<p>').text(urls[urlIndex].url)
-        var urlLi = $('<li>').append(urlLink)
-        $('#recentAdded').append(urlLi)
+
+        var deleteForm = $('<form>').addClass('recentDelete').attr({
+          'action': '/removeRecent?_method=DELETE',
+          'method': 'POST'
+        }).append($('<button>').addClass('btn recentDelBtn').append('<i class="fa fa-times"></i>'))
+
+        var urlLink = $('<a>').addClass('list-group-item list-group-item-action d-flex justify-content-between align-items-center  bookmarkURL').text(urls[urlIndex].url).attr({
+          'href': urls[urlIndex].url,
+          'target': '_blank'
+        }).append(deleteForm)
+        console.log(urls[urlIndex].id)
+        // var urlLink = $('<p>').text(urls[urlIndex].url)
+        // var urlLi = $('<li>').append(urlLink)
+        $('#recentAdded').append(urlLink)
       }
     })
 }
+
+//delete recent urls
+$(document).on('click', '.recentDelete', function(){
+  event.preventDefault();
+  var recentId = $(this).attr('data')
+  console.log(recentId)
+  $(this).parent().remove();//remove from DOM
+
+  $.ajax({
+    url: '/removeRecent?_method=DELETE',
+    method: 'POST',
+    data: {
+      id : recentId
+    }
+  }).then(function(res){
+    console.log('url deleted!')
+  });
+})
