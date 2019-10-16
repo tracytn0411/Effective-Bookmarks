@@ -92,6 +92,9 @@ a[data-toggle="collapse"] {
 }
 
 /* ---------------------------------------------------
+    TOPBAR STYLE
+----------------------------------------------------- */
+/* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
 
@@ -112,6 +115,16 @@ a[data-toggle="collapse"] {
 #contentBody {
     padding: 1rem;
 }
+
+.fa-times {
+    color: white;
+}
+
+.urlDelBtn:hover,
+.recentDelBtn:hover {
+    background-color: darkgrey;
+}
+
 
 /* ---------------------------------------------------
     FOOTER STYLE
