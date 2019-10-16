@@ -1,0 +1,10 @@
+.popup, .test {
+    background-color: dimgray;
+    height: 100%;
+    color: #ffc107;
+    padding: 20px 20px;
+}
+
+#testbtn {
+    width: 20px;
+}
