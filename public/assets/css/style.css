@@ -138,9 +138,13 @@ a[data-toggle="collapse"] {
 }
 
 .newUrls {
-    height: 200px;
+    height: 300px;
+    overflow: scroll;
 }
 
+.recentAdded {
+    margin: 0.5rem;
+}
 /* #footbar {
     height: 200px;
     position: fixed;

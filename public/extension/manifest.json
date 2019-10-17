@@ -3,10 +3,8 @@
   "version": "1.0",
   "description": "effective bookmark",
   "permissions": [
-    "storage", 
-    "declarativeContent",
+    "storage",
     "tabs",
-    "<all_urls>",
     "activeTab"
   ],
   "background": {

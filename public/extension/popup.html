@@ -2,39 +2,46 @@
 
 <body lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>GTmetrix Analyzer</title>
-        <title>Popup Bookmark</title>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Popup Bookmark</title>
 
-        <!-- Bootstrap CSS CDN -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <!-- Our Custom CSS -->
-        <link rel="stylesheet" href="./popup.css">
-        <!-- Scrollbar Custom CSS -->
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-        <!-- Font Awesome JS -->
-        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
-            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    </head>
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="./popup.css">
+  </head>
 
-    <body>
-        <div class="popup">
-            <h2>Effective Bookmark</h2>
-                <button id="testBtn" type="button" class="btn btn-info btn-block">Add</button>
-            <!-- <form action="input">
+  <body>
+    <div class="card popup">
+
+      <div class="card-header">
+        <a class='text-decoration-none popupEB' href="https://effective-bookmarks.herokuapp.com" target="_blank">Effective Bookmarks</a>
+      </div>
+      
+
+      <div class='card-body' id="tabInfo">
+        <p class="d-inline font-weight-bold p-2 .title">Title</p>
+        <p class='d-inline p-2 text-white' id="newTitle"></p>
+      </div>
+      <div class="card-footer bg-transparent text-right">
+        <button class="btn btn-info saveEB">Save</button>
+        <button class="btn btn-secondary">Close</button>
+      </div>
+
+      <div></div>
+      <!-- <form action="input">
                 <input type="text" name="newCategories" placeholder="Add your category">
                 <button id="addCategories" type="button" class="btn btn-primary">+</button>
                 <ul id="ul"></ul>
             </form> -->
-            <div id="test"></div>
-        </div>
-        <script src="./jquery-3.4.1.min.js"></script>
-        <script src="./popup.js"></script>
+      <div id="test"></div>
+    </div>
+    <script src="./jquery-3.4.1.min.js"></script>
+    <script src="./popup.js"></script>
 
 
-    </body>
+  </body>

@@ -102,7 +102,7 @@ app.delete('/removeUrl', function(req, res) {
   })
 })
 app.delete('/removeRecent', function(req, res) {
-  connection.query ('DELETE FROM recentlyAdded WHERE id = ?', [req.body.id], function(error, results, fields){
+  connection.query ('DELETE FROM recentAdded WHERE id = ?', [req.body.id], function(error, results, fields){
     if (error) res.send(error)
     else res.redirect('/')
   })
@@ -111,14 +111,11 @@ app.delete('/removeRecent', function(req, res) {
 app.post('/extension', function(req, res){
   console.log(req.body)
 
-  //res.json({sucess: true})
-
-  connection.query ('INSERT INTO recentlyAdded (url) VALUES (?)', [req.body.url], function(error, results, fields){
+  connection.query ('INSERT INTO recentAdded (current_title, current_url) VALUES (?,?)', [req.body.tab_title, req.body.tab_url], function(error, results, fields){
     if (error) res.send(error)
     else {
-        connection.query('SELECT * FROM recentlyAdded', function (error, results, fields){
+        connection.query('SELECT * FROM recentAdded', function (error, results, fields){
           if (error) return res.send(error)
-
           res.json({sucess: true});
         })
       }
@@ -126,7 +123,7 @@ app.post('/extension', function(req, res){
 })
 
 app.get('/extension',function(req, res) {
-  connection.query ('SELECT url FROM recentlyAdded', function (error, results, fields){
+  connection.query ('SELECT * FROM recentAdded', function (error, results, fields){
     if (error) res.send(error)
     else res.send(results)
   })

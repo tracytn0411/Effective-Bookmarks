@@ -11,14 +11,31 @@ chrome.runtime.onInstalled.addListener(function () {
     console.log("The color is green.");
   });
 
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    chrome.declarativeContent.onPageChanged.addRules([{
-      conditions: [new chrome.declarativeContent.PageStateMatcher({
-        pageUrl: {
-          hostEquals: 'developer.chrome.com'
-        },
-      })],
-      actions: [new chrome.declarativeContent.ShowPageAction()]
-    }]);
-  })
 })
+
+//Fired when a browser action icon is clicked. Does not fire if the browser action has a popup.
+chrome.browserAction.onClicked.addListener(function(tab) {
+  // No tabs or host permissions needed!
+  console.log('Turning ' + tab.url + ' red!');
+  chrome.tabs.executeScript({
+    code: 'document.body.style.backgroundColor="red"'
+  });
+});
+
+// chrome.storage.local.get('signed_in', function(data) {
+//   if (data.signed_in) {
+//     chrome.browserAction.setPopup({popup: 'popup.html'});
+//   } else {
+//     chrome.browserAction.setPopup({popup: 'popup_sign_in.html'});
+//   }
+// });
+    // chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+    //   chrome.declarativeContent.onPageChanged.addRules([{
+    //     conditions: [new chrome.declarativeContent.PageStateMatcher({
+    //       pageUrl: {
+    //         hostEquals: 'developer.chrome.com'
+    //       },
+    //     })],
+    //     actions: [new chrome.declarativeContent.ShowPageAction()]
+    //   }]);
+    // })
