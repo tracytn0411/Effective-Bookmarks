@@ -195,30 +195,43 @@ function displayRecent() {
       url: '/extension',
       method: 'GET',
     })
-    .then(function (urls) {
-      for (let urlIndex in urls) {
-
-        var deleteForm = $('<form>').addClass('recentDelete').attr({
-          'action': '/removeRecent?_method=DELETE',
-          'method': 'POST'
-        }).append($('<button>').addClass('btn recentDelBtn').append('<i class="fa fa-times"></i>'))
-
-        var urlLink = $('<a>').addClass('list-group-item list-group-item-action d-flex justify-content-between align-items-center  bookmarkURL').text(urls[urlIndex].url).attr({
-          'href': urls[urlIndex].url,
+    .then(function (recentEBs) {
+      
+      $.each(recentEBs, function (){
+        var cardDiv = $('<div>').addClass('card')
+        var cardCollapse = $('<div>').addClass('collapse').attr('id', 'collapse' + this.id)
+        var recentUrl = $('<div>').addClass('card-body').append($('<a>').addClass('text-decoration-none').text(this.current_url).attr({
+          'href': this.current_url,
           'target': '_blank'
-        }).append(deleteForm)
-        console.log(urls[urlIndex].id)
-        // var urlLink = $('<p>').text(urls[urlIndex].url)
-        // var urlLi = $('<li>').append(urlLink)
-        $('#recentAdded').append(urlLink)
-      }
-    })
+        }))
+        var cardHeader = $('<div>').addClass('card-header recentHeader')
+        
+        var cardTitle = $('<button>').addClass('btn d-inline').attr({
+          'type': 'button',
+          'data-toggle':'collapse', 
+          'data-target':'#collapse' + this.id,
+          'aria-expanded': 'false',
+          'aria-controls': 'collapse' + this.id
+        }).text(this.current_title);
+
+        var deleteForm = $('<form>').addClass('recentDelete d-inline').attr({
+          'action': '/removeRecent?_method=DELETE',
+          'method': 'POST',
+          'data-id': this.id,
+        }).append($('<button>').addClass('btn recentDelBtn').append('<i class="fa fa-times"></i>'))
+        
+        cardCollapse.append(recentUrl)
+        cardDiv.append(cardHeader,cardCollapse);
+        cardHeader.append(cardTitle, deleteForm)
+        $('.recentAdded').append(cardDiv);
+      });
+    });
 }
 
 //delete recent urls
 $(document).on('click', '.recentDelete', function(){
   event.preventDefault();
-  var recentId = $(this).attr('data')
+  var recentId = $(this).attr('data-id')
   console.log(recentId)
   $(this).parent().remove();//remove from DOM
 
