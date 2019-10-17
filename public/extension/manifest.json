@@ -5,7 +5,8 @@
   "permissions": [
     "storage",
     "tabs",
-    "activeTab"
+    "activeTab",
+    "identity"
   ],
   "background": {
     "scripts": ["background.js"],
@@ -14,14 +15,20 @@
   "content_scripts": [
     {
       "matches": ["http://*/*"],
-      "js": ["jquery-3.4.1.min.js", "popup.js"]
+      "js": ["jquery-3.4.1.min.js", "popup.js", "oauth.js"]
     }
   ],
   "manifest_version": 2,
 
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgh5u8gHb05SMYcqT4DjEYQeXDwLS3V2WtU/xWKLqsDc1qxINKsLz/Gg0F/3wjGcCKXLf0Ef+LACWUeNNBqWLmf2uE1R5v4kb2FFasY+3uko3F/uGBrNcnmL+YbpQCQ3jCeG6E/5GvUnUwKCQExEBJ8I3RGMi6ZQngv1sjk+5l0+0zzudm8DsZI+Vbo0T5E+wuYS+82eiFctuzNaIqEbve97LB2MnPYbGLdcxhu7KKn5twyj2+wVWkVlmBs7BFpWT4N32Ra+Ri5e3Q9lzelmMCy+s6S/+1bWN9JaUTj7fNgHIMBmlFYmA3rlv48hl+TrapZUMs5C0goEZa0W4GqIXfwIDAQAB",
+  "oauth2": {
+    "client_id": "974185174209-h146qadbjp8ehlr8ie025nn4ec3dh6nb.apps.googleusercontent.com",
+    "scopes":["https://www.googleapis.com/auth/contacts.readonly"]
+  },
+
   "browser_action": {
     "default_title": "URL CATCHER",
-    "default_popup": "popup.html",
+    
     "default_icon": {
       "16": "images/bookmarkicon16.png",
       "32": "images/bookmarkicon32.png",
