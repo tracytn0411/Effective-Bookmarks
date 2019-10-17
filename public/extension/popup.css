@@ -1,0 +1,16 @@
+body {
+    height: 250px;
+    width: 400px;
+    background-color:lightslategrey;
+}
+
+.card {
+    background-color: dimgray;
+    height: 100%;
+    width: 100%;
+}
+
+.popupEB {
+    color: #ffc107;
+    font-size: 1.6rem
+}
