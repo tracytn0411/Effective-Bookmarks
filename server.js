@@ -89,7 +89,7 @@ app.post('/insertSubcat', function(req, res) {
 })
 
 app.post('/insertURL', function(req, res) {
-  connection.query ('INSERT INTO bookmarks (cat_id, subcat_id, bookmark_url) VALUES (?,?,?)', [req.body.cat_id, req.body.subcat_id, req.body.bookmark_url], function(error, results, fields){
+  connection.query ('INSERT INTO bookmarks (cat_id, subcat_id, bookmark_name, bookmark_url) VALUES (?,?,?,?)', [req.body.cat_id, req.body.subcat_id, req.body.bookmark_name, req.body.bookmark_url], function(error, results, fields){
     if (error) res.send(error)
     else res.redirect('/')
   })
