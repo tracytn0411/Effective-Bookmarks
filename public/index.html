@@ -28,24 +28,21 @@
   <nav id="sidebar">
     <header class="sidebar-header p-3">
       <a class='text-decoration-none text-warning' href="/">
-      <h2>Effective Bookmarks</h2>
-    </a>
+        <h2>Effective Bookmarks</h2>
+      </a>
     </header>
 
     <ul class="categories list-unstyled py-4"></ul>
 
-    <aside class="asideFooter p-4 mt-auto">
-      <a href="#">Our Team</a>
-    </aside>
   </nav>
 
   <!-- Page Content  -->
   <main id="content" class="d-flex flex-column">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light topBar">
 
       <!--Collapse button to minimize sidebar-->
-      <button type="button" id="sidebarCollapse" class="btn btn-info">
-        <i class="fa fa-angle-double-left"></i>
+      <button type="button" id="sidebarCollapse" class="btn">
+        <i class="fa fa-angle-double-left" aria-hidden="true"></i>
       </button>
 
       <!--Collapse button for small viewport-->
@@ -56,13 +53,14 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="nav nav-pills">
+        <ul class="navbar-nav mr-auto">
 
           <!--Button Add on Navbar-->
           <li class="nav-item">
             <div class="btn-group dropdown" id="addDropdown">
-              <a class="nav-link dropdown-toggle-split" data-toggle="dropdown" href="#" role="button"
-                aria-haspopup="true" aria-expanded="false">Add</a>
+              <a class="nav-link dropdown-toggle-split pl-4 text-info" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-lg fa-plus"></i>
+              </a>
               <div class="dropdown-menu" id='addOptions'>
                 <button class="dropdown-item modalCat" onclick="addMenu(this.value)" value='inputCat' type="button">New
                   category</button>
@@ -77,10 +75,86 @@
             </div>
           </li>
 
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">Page</a>
-          </li> -->
+          <li class="nav-item">
+              <form class="form-inline my-2 my-lg-0" id="searchArea">
+                  <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="addon2">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">
+                            <i class="fa fa-search"></i>
+
+                        </button>
+                      </div>
+                    </div>
+
+                </form>
+          </li>
         </ul>
+
+
+          
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-warning" data-toggle="modal" data-target="#ourTeam">
+            Our Team
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="ourTeam" tabindex="-1" role="dialog" aria-labelledby="ourTeamLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title text-warning" id="ourTeamLabel">Meet Our Team</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <div class="modal-body teamModal">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-4">
+                        <div class="card">
+                          <img src="assets/images/Annie profile.png" class="card-img-top" alt="Tracy">
+                          <div class="card-body">
+                            <p class="card-text text-info">Annie Luc</p>
+                            
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="card">
+                          <img src="assets/images/Karolina profile.png" class="card-img-top" alt="Annie">
+                          <div class="card-body">
+                            <p class="card-text text-info">Agnieszka Kurnicki (Karolina)</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-4">
+                        <div class="card">
+                          <img src="assets/images/Tracy profile.png" class="card-img-top" alt="Karoline">
+                          <div class="card-body">
+                            <p class="card-text text-info">Tracy Nguyen</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <section class="pl-2">
+            <a href="https://github.com/tracytn0411/Effective-Bookmarks" title="github" target="_black" rel="noopener noreferrer">
+            <i class="fa fa-lg text-info fa-github"></i></a>
+          </section>
+
+
+
+        
+
+
       </div>
     </nav>
 

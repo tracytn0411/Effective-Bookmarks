@@ -75,6 +75,7 @@ function displaySubcat() {
   })
 }
 
+//display bookmarks 
 $(document).on('click', '.subcatBtn', function () {
   $('.bookmarks').empty();
   var subcatBtn_id = $(this).attr('data');
@@ -87,24 +88,56 @@ $(document).on('click', '.subcatBtn', function () {
         subcat_id: subcatBtn_id
       }
     })
-    .then(function (urls) {
-      for (let urlIndex in urls) {
-        
-        var deleteForm = $('<form>').addClass('urlDelete').attr({
-          'action': '/removeUrl?_method=DELETE',
-          'method': 'POST',
-          'data': urls[urlIndex].id
-        }).append($('<button>').addClass('btn urlDelBtn').append('<i class="fa fa-times"></i>'))
-
-        var urlLink = $('<a>').addClass('list-group-item list-group-item-action d-flex justify-content-between align-items-center  bookmarkURL').text(urls[urlIndex].bookmark_url).attr({
-          'href': urls[urlIndex].bookmark_url,
+    .then(function (bookmarks) {
+      
+      $.each(bookmarks, function (){
+        var cardDiv = $('<div>').addClass('card')
+        var cardCollapse = $('<div>').addClass('collapse').attr('id', 'collapse' + this.id)
+        var bookmarkUrl = $('<div>').addClass('card-body').append($('<a>').addClass('text-decoration-none').text(this.bookmark_url).attr({
+          'href': this.bookmark_url,
           'target': '_blank'
-        }).append(deleteForm)
+        }))
+        var cardHeader = $('<div>').addClass('card-header bookmarkHeader')
+        
+        var bookmarkName = $('<button>').addClass('btn d-inline').attr({
+          'type': 'button',
+          'data-toggle':'collapse', 
+          'data-target':'#collapse' + this.id,
+          'aria-expanded': 'false',
+          'aria-controls': 'collapse' + this.id
+        }).text(this.bookmark_name);
+
+        var deleteForm = $('<form>').addClass('recentDelete d-inline').attr({
+          'action': '/removeRecent?_method=DELETE',
+          'method': 'POST',
+          'data-id': this.id,
+        }).append($('<button>').addClass('btn recentDelBtn').append('<i class="fa fa-times"></i>'))
+        
+        cardCollapse.append(bookmarkUrl)
+        cardDiv.append(cardHeader,cardCollapse);
+        cardHeader.append(bookmarkName, deleteForm)
+        //$('.recentAdded').append(cardDiv);
+        $('#' + 'urlSubID' + this.subcat_id).append(cardDiv)
+      });
+    });
+    // .then(function (urls) {
+    //   for (let urlIndex in urls) {
+        
+    //     var deleteForm = $('<form>').addClass('urlDelete').attr({
+    //       'action': '/removeUrl?_method=DELETE',
+    //       'method': 'POST',
+    //       'data': urls[urlIndex].id
+    //     }).append($('<button>').addClass('btn urlDelBtn').append('<i class="fa fa-times"></i>'))
+
+    //     var urlLink = $('<a>').addClass('list-group-item list-group-item-action d-flex justify-content-between align-items-center  bookmarkURL').text(urls[urlIndex].bookmark_url).attr({
+    //       'href': urls[urlIndex].bookmark_url,
+    //       'target': '_blank'
+    //     }).append(deleteForm)
 
 
-        $('#' + 'urlSubID' + urls[urlIndex].subcat_id).append(urlLink)
-      }
-    })
+    //     $('#' + 'urlSubID' + urls[urlIndex].subcat_id).append(urlLink)
+    //   }
+    // })
 })
 
 //delete urls
@@ -169,7 +202,8 @@ $(document).on('click', '#addSubCat', function () {
 $(document).on('click', '#addUrl', function () {
   event.preventDefault()
 
-  var newUrl = $('#inputBookmark').val();
+  var newEbName = $('#inputEbName').val()
+  var newEbUrl = $('#inputEbURL').val();
   var parentCat = $('#selectCatU').val();
   var parentSubcat = $('#selectSubcatU option:selected').attr('data');
   console.log(parentSubcat)
@@ -180,7 +214,8 @@ $(document).on('click', '#addUrl', function () {
       data: {
         cat_id: parentCat,
         subcat_id: parentSubcat,
-        bookmark_url: newUrl
+        bookmark_name: newEbName,
+        bookmark_url: newEbUrl
       }
     })
     .then(function (res) {
@@ -245,3 +280,9 @@ $(document).on('click', '.recentDelete', function(){
     console.log('url deleted!')
   });
 })
+
+//Team akt modal
+// $('.teamBtn').on('click', function(){
+//   event.preventDefault(); 
+
+// })

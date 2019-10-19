@@ -92,6 +92,7 @@ function newSubcat() {
   $('#addModal').modal('show')
 }
 
+//Add new bookmark with title
 //function add new row to table *bookmarks*
 function newEB() {
   $('.addHeader').text('Add bookmark');
@@ -110,14 +111,46 @@ function newEB() {
     )
   )
 
-  var urlInput = $('<div>').addClass('form-group').append([
-    $('<label>').attr('for', 'inputBookmark').text('URL'),
+  //var ebInput = $('<div>').addClass('input-group')
+  
+  
+  var ebName = $('<div>').addClass('input-group mb-3').append([
+    $('<div>').addClass('input-group-prepend').append($('<span>').addClass('input-group-text').attr('id', 'ebNameAddOn').text('Name')),
     $('<input>').addClass('form-control').attr({
       'type': 'text',
-      'aria-label': 'New Bookmark',
-      'id': 'inputBookmark'
+      'aria-label': 'New Name',
+      'aria-describedby': 'ebNameAddOn',
+      'id': 'inputEbName'
     })
   ])
+  // var ebName = [
+  var ebURL = $('<div>').addClass('input-group mb-3').append([
+    $('<div>').addClass('input-group-prepend').append($('<span>').addClass('input-group-text').attr('id', 'ebURLAddOn').text('URL')),
+    $('<input>').addClass('form-control').attr({
+      'type': 'text',
+      'aria-label': 'New URL',
+      'aria-describedby': 'ebURLAddOn',
+      'id': 'inputEbURL'
+    })
+  ])
+  // var ebName = [
+  //   $('<label>').attr('for', 'inputBookmark').text('Name'),
+  //   $('<input>').addClass('form-control').attr({
+  //     'type': 'text',
+  //     'aria-label': 'New Name',
+  //     'id': 'inputName'
+  //   })
+  // ]
+  // var ebURL = [
+  //   $('<label>').attr('for', 'inputBookmark').text('URL'),
+  //   $('<input>').addClass('form-control').attr({
+  //     'type': 'text',
+  //     'aria-label': 'New Bookmark',
+  //     'id': 'inputBookmark'
+  //   })
+  // ]
+
+  //ebInput.append(ebName, ebURL)
   var urlBtn = $('<button>').addClass('btn btn-info').attr({
     'id': 'addUrl',
     'data-dismiss': 'modal'
@@ -162,7 +195,7 @@ function newEB() {
       })
     })
 
-  urlForm.append(parentCat, parentSubcat, urlInput, urlBtn)
+  urlForm.append(parentCat, parentSubcat, ebName, ebURL, urlBtn)
   modalBody.append(urlForm)
   $('#addModal').modal('show')
 }
